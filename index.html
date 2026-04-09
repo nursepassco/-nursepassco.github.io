@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NursePassCo — NCLEX Study Materials</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e42;
+    --teal: #2a9d8f;
+    --teal-light: #3ab5a6;
+    --cream: #f8f5f0;
+    --warm-white: #fdfcfa;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --gold: #d4a853;
+    --border: #e8e2d9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(253, 252, 250, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span {
+    color: var(--teal);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--teal); }
+
+  .nav-cta {
+    background: var(--navy);
+    color: var(--cream) !important;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 12px !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--teal) !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 100px 24px 60px;
+  }
+
+  .hero-bg-lines {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-bg-lines::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(42, 157, 143, 0.12);
+  }
+
+  .hero-bg-lines::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(42, 157, 143, 0.08);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(42,157,143,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(42,157,143,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 480px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(42, 157, 143, 0.15);
+    border: 1px solid rgba(42, 157, 143, 0.3);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 11px;
+    color: var(--teal-light);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(38px, 9vw, 58px);
+    color: var(--cream);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal-light);
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: rgba(248, 245, 240, 0.6);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    font-weight: 300;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    border: 1px solid rgba(248,245,240,0.2);
+    color: rgba(248,245,240,0.7);
+    padding: 14px 24px;
+    border-radius: 4px;
+    font-size: 13px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: var(--teal); color: var(--teal-light); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 48px;
+    right: 24px;
+    display: flex;
+    gap: 32px;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: rgba(248,245,240,0.4);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* TRUST BAR */
+  .trust-bar {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+
+  .trust-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--teal);
+  }
+
+  /* SECTION */
+  section {
+    padding: 80px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 6vw, 40px);
+    color: var(--navy);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+
+  .section-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 520px;
+    font-weight: 300;
+  }
+
+  /* PRODUCTS */
+  .products-section {
+    background: var(--warm-white);
+  }
+
+  .products-header {
+    margin-bottom: 48px;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .product-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(13, 27, 42, 0.1);
+  }
+
+  .product-card:nth-child(1) { animation-delay: 0.05s; }
+  .product-card:nth-child(2) { animation-delay: 0.1s; }
+  .product-card:nth-child(3) { animation-delay: 0.15s; }
+  .product-card:nth-child(4) { animation-delay: 0.2s; }
+  .product-card:nth-child(5) { animation-delay: 0.25s; }
+  .product-card:nth-child(6) { animation-delay: 0.3s; }
+
+  .product-thumb {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .thumb-1 { background: linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 100%); }
+  .thumb-2 { background: linear-gradient(135deg, #1a2e42 0%, #2a9d8f 100%); }
+  .thumb-3 { background: linear-gradient(135deg, #0d2b1a 0%, #1a5c3a 100%); }
+  .thumb-4 { background: linear-gradient(135deg, #2a1a0d 0%, #8f5c2a 100%); }
+  .thumb-5 { background: linear-gradient(135deg, #1a0d2b 0%, #5c2a8f 100%); }
+  .thumb-6 { background: linear-gradient(135deg, #2a0d1a 0%, #8f2a5c 100%); }
+
+  .thumb-icon {
+    font-size: 48px;
+    opacity: 0.9;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--gold);
+    color: white;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  .product-body {
+    padding: 20px;
+  }
+
+  .product-category {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .product-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .product-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .product-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--navy);
+  }
+
+  .product-price .cents {
+    font-size: 13px;
+    vertical-align: super;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+
+  .product-buy {
+    background: var(--navy);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+
+  .product-buy:hover { background: var(--teal); }
+
+  .product-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  /* ABOUT / STORY */
+  .story-section {
+    background: var(--navy);
+    max-width: 100%;
+    padding: 80px 24px;
+  }
+
+  .story-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .story-visual {
+    position: relative;
+  }
+
+  .story-card {
+    background: rgba(42, 157, 143, 0.08);
+    border: 1px solid rgba(42, 157, 143, 0.2);
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .story-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .story-card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .story-card-text {
+    font-size: 13px;
+    color: rgba(248,245,240,0.5);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .story-content .section-label { color: var(--teal-light); }
+
+  .story-content .section-title { color: var(--cream); }
+
+  .story-content p {
+    font-size: 14px;
+    color: rgba(248,245,240,0.6);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .story-highlight {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(42,157,143,0.08);
+    border-left: 2px solid var(--teal);
+    border-radius: 0 4px 4px 0;
+    margin-top: 24px;
+  }
+
+  .story-highlight p {
+    font-size: 13px;
+    color: rgba(248,245,240,0.7);
+    margin: 0;
+    font-style: italic;
+  }
+
+  /* CATEGORIES */
+  .categories-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .cat-pill {
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    background: white;
+    letter-spacing: 0.3px;
+  }
+
+  .cat-pill.active, .cat-pill:hover {
+    background: var(--navy);
+    color: white;
+    border-color: var(--navy);
+  }
+
+  /* REVIEWS */
+  .reviews-section {
+    background: var(--cream);
+    max-width: 100%;
+    padding: 80px 24px;
+  }
+
+  .reviews-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 48px;
+  }
+
+  .review-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+  }
+
+  .review-stars {
+    color: var(--gold);
+    font-size: 13px;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+
+  .review-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  .review-author {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .review-verified {
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 48px 24px 32px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+
+  .footer-logo span { color: var(--teal); }
+
+  .footer-tagline {
+    font-size: 13px;
+    color: rgba(248,245,240,0.4);
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    list-style: none;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: rgba(248,245,240,0.4);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--teal-light); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(248,245,240,0.2);
+    letter-spacing: 0.5px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero-stats { position: static; margin-top: 48px; justify-content: flex-start; }
+    .story-inner { grid-template-columns: 1fr; gap: 32px; }
+    .hero { padding-bottom: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">NursePass<span>Co</span></div>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="https://www.etsy.com/shop/nursepassco" target="_blank" class="nav-cta">Shop Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">NCLEX Study Materials</div>
+    <h1>Pass Your NCLEX <em>With Confidence</em></h1>
+    <p>Nurse-created digital study guides, notes, and resources built from real clinical experience. Everything you need — nothing you don't.</p>
+    <div class="hero-actions">
+      <a href="https://www.etsy.com/shop/nursepassco" target="_blank" class="btn-primary">
+        Browse Products
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Students Helped</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4.9★</div>
+      <div class="stat-label">Avg Rating</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    RN-Created Content
+  </div>
+  <div class="trust-item">
+    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    Instant Digital Download
+  </div>
+  <div class="trust-item">
+    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    First-Attempt Focused
+  </div>
+  <div class="trust-item">
+    <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    Study at Your Own Pace
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div id="products" style="background: var(--warm-white);">
+  <section class="products-section" style="max-width:900px; margin:0 auto;">
+    <div class="products-header">
+      <p class="section-label">Digital Downloads</p>
+      <h2 class="section-title">Study Smarter,<br>Not Harder</h2>
+      <p class="section-sub">Every guide was built the way I studied — clinical thinking first, memorization second. These are the materials I wish I had.</p>
+    </div>
+
+    <div class="categories-row">
+      <button class="cat-pill active">All</button>
+      <button class="cat-pill">Med-Surg</button>
+      <button class="cat-pill">Pharmacology</button>
+      <button class="cat-pill">Lab Values</button>
+      <button class="cat-pill">Priority & Delegation</button>
+      <button class="cat-pill">NCLEX-RN</button>
+    </div>
+
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="product-thumb thumb-1">
+          <span class="thumb-icon">📋</span>
+          <span class="product-badge">Best Seller</span>
+        </div>
+        <div class="product-body">
+          <p class="product-category">Med-Surg</p>
+          <h3 class="product-name">Ultimate Med-Surg Study Guide</h3>
+          <p class="product-desc">Comprehensive notes covering all major systems — cardiac, respiratory, neuro, renal & more. Formatted for quick review.</p>
+          <div class="product-meta">⭐⭐⭐⭐⭐ <span style="margin-left:4px;">48 reviews</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="cents">$</span>12</div>
+            <button class="product-buy">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb thumb-2">
+          <span class="thumb-icon">💊</span>
+          <span class="product-badge">Popular</span>
+        </div>
+        <div class="product-body">
+          <p class="product-category">Pharmacology</p>
+          <h3 class="product-name">Pharm Cheat Sheet Bundle</h3>
+          <p class="product-desc">Drug classes, mechanisms, side effects, and nursing considerations condensed onto clean, printable sheets.</p>
+          <div class="product-meta">⭐⭐⭐⭐⭐ <span style="margin-left:4px;">36 reviews</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="cents">$</span>9</div>
+            <button class="product-buy">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb thumb-3">
+          <span class="thumb-icon">🧪</span>
+        </div>
+        <div class="product-body">
+          <p class="product-category">Lab Values</p>
+          <h3 class="product-name">Critical Lab Values Quick Reference</h3>
+          <p class="product-desc">Normal ranges, critical values, and clinical implications for every lab the NCLEX loves to test.</p>
+          <div class="product-meta">⭐⭐⭐⭐⭐ <span style="margin-left:4px;">22 reviews</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="cents">$</span>6</div>
+            <button class="product-buy">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb thumb-4">
+          <span class="thumb-icon">🎯</span>
+          <span class="product-badge">New</span>
+        </div>
+        <div class="product-body">
+          <p class="product-category">Priority & Delegation</p>
+          <h3 class="product-name">Priority & Delegation Mastery Guide</h3>
+          <p class="product-desc">Master the #1 hardest NCLEX concept. Frameworks, decision trees, and 50+ practice scenarios with rationales.</p>
+          <div class="product-meta">⭐⭐⭐⭐⭐ <span style="margin-left:4px;">14 reviews</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="cents">$</span>10</div>
+            <button class="product-buy">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb thumb-5">
+          <span class="thumb-icon">🧠</span>
+        </div>
+        <div class="product-body">
+          <p class="product-category">NCLEX-RN</p>
+          <h3 class="product-name">NCLEX NGN Case Study Pack</h3>
+          <p class="product-desc">Next Generation NCLEX format practice — unfolding case studies with clinical judgment frameworks built in.</p>
+          <div class="product-meta">⭐⭐⭐⭐⭐ <span style="margin-left:4px;">19 reviews</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="cents">$</span>14</div>
+            <button class="product-buy">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-thumb thumb-6">
+          <span class="thumb-icon">📦</span>
+          <span class="product-badge">Best Value</span>
+        </div>
+        <div class="product-body">
+          <p class="product-category">Bundle</p>
+          <h3 class="product-name">Complete NCLEX Study Bundle</h3>
+          <p class="product-desc">All 5 guides in one download. Everything you need from start to pass day — over 60% off individual prices.</p>
+          <div class="product-meta">⭐⭐⭐⭐⭐ <span style="margin-left:4px;">31 reviews</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="cents">$</span>32</div>
+            <button class="product-buy">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="story-section">
+  <div class="story-inner">
+    <div class="story-visual">
+      <div class="story-card">
+        <span class="story-icon">👩🏾‍⚕️</span>
+        <h3 class="story-card-title">Built by a Nurse,<br>for Nurses</h3>
+        <p class="story-card-text">NCLEX passed on the first attempt. Every resource here reflects the exact approach that worked.</p>
+      </div>
+    </div>
+    <div class="story-content">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title" style="color: var(--cream);">Why NursePassCo Exists</h2>
+      <p>The NCLEX is hard. Not because the material is impossible — but because most study resources don't teach you how to <em style="color: var(--teal-light);">think</em> like a nurse.</p>
+      <p>NursePassCo was created by a working RN who passed the NCLEX on the first attempt — not by memorizing thousands of facts, but by mastering clinical judgment and applying it consistently.</p>
+      <div class="story-highlight">
+        <p>"I studied every day at the library. I focused on understanding why, not just what. These guides are how I'd teach my younger self to pass."</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<div id="reviews" class="reviews-section">
+  <div class="reviews-inner">
+    <p class="section-label">Student Love</p>
+    <h2 class="section-title">What Nurses Are Saying</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The Med-Surg guide is incredible. Everything is organized exactly how my brain needed it. Passed NCLEX in 85 questions!"</p>
+        <p class="review-author">Jasmine T.</p>
+        <p class="review-verified">✓ Verified Purchase</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The pharm cheat sheets alone were worth it. I printed them out and reviewed them every morning. Game changer for clinical thinking."</p>
+        <p class="review-author">Marcus W.</p>
+        <p class="review-verified">✓ Verified Purchase</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I bought the bundle two weeks before my test date. Best decision I made. The priority & delegation guide especially helped me stop second-guessing."</p>
+        <p class="review-author">Destiny R.</p>
+        <p class="review-verified">✓ Verified Purchase</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div style="background: var(--warm-white); padding: 60px 24px; text-align: center; border-top: 1px solid var(--border);">
+  <p style="font-size:10px; letter-spacing:4px; text-transform:uppercase; color: var(--teal); margin-bottom:12px; font-family:'DM Sans',sans-serif; font-weight:500;">Get In Touch</p>
+  <h2 style="font-family:'DM Serif Display',serif; font-size:32px; color:var(--navy); margin-bottom:12px;">Have a Question?</h2>
+  <p style="font-size:14px; color:var(--text-muted); margin-bottom:24px; font-weight:300;">We'd love to hear from you. Reach out anytime.</p>
+  <a href="mailto:nursepassco@gmail.com" style="display:inline-block; background:var(--navy); color:white; padding:14px 32px; border-radius:4px; font-size:13px; font-weight:500; text-decoration:none; letter-spacing:0.5px; transition: background 0.2s;" onmouseover="this.style.background='#2a9d8f'" onmouseout="this.style.background='#0d1b2a'">nursepassco@gmail.com</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">NursePass<span>Co</span></div>
+  <p class="footer-tagline">Nurse-created resources for nurses who are ready to pass.</p>
+  <ul class="footer-links">
+    <li><a href="https://www.etsy.com/shop/nursepassco" target="_blank">Shop on Etsy</a></li>
+    <li><a href="mailto:nursepassco@gmail.com">Contact Us</a></li>
+    <li><a href="mailto:nursepassco@gmail.com?subject=Question about NursePassCo">FAQ</a></li>
+    <li><a href="mailto:nursepassco@gmail.com?subject=Refund Request">Refund Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 NursePassCo · nursepassco@gmail.com · All rights reserved</p>
+</footer>
+
+<script>
+  // Category filter interaction
+  document.querySelectorAll('.cat-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
